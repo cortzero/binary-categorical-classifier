@@ -1,4 +1,4 @@
-from k_fold import execute_k_fold
+from classifier_main_module import execute_k_fold
 
 if __name__ == '__main__':
   
