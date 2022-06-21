@@ -14,6 +14,19 @@ class SimplicialComplexCreator:
   The class that will create the simplicial complexes for each category in the dataset.
   '''
 
+  '''
+  This method creates a SimplicialComplex object for each category in the training matrix.
+
+  Parameters
+  ----------
+  training_matrix : List
+      The set of simplices used for training.
+
+  Return
+  ------
+  simplicial_complexes : List
+      A list that contains all the simplicial complexes created per category.
+  '''
   def create_simplicial_complex(self, training_matrix=[]):
     simplicial_complexes = []
     categories = self.get_categories(training_matrix)
@@ -29,6 +42,19 @@ class SimplicialComplexCreator:
       simplicial_complexes.append(complex_k)
     return simplicial_complexes
 
+  '''
+  Creates a list with all the categories in the training matrix.
+
+  Parameters
+  ----------
+  training_matrix : List
+      The set of simplices used for training.
+
+  Return
+  ------
+  category_list : List
+      A list that contains the categories from the dataset.
+  '''
   def get_categories(self, training_matrix=[]):
     categories_list = []
     i = 0
