@@ -32,7 +32,7 @@ def execute_k_fold(dataset_path, splits, has_to_shuffle):
       A list containing the simplices used to test q-analysis algorithm
   '''
   dataset = pd.read_excel(dataset_path)
-  kfold = KFold(n_splits=splits, shuffle=has_to_shuffle, random_state=1)
+  kfold = KFold(n_splits=splits, shuffle=has_to_shuffle)
   for train, test in kfold.split(dataset):
     train_matrix = []
     for x in train:
