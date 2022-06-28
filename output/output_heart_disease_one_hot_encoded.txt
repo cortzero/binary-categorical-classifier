@@ -1,0 +1,90 @@
+===============================================
+Simplex: 0 
+Expected category: presence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 1 
+Expected category: absence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 2 
+Expected category: presence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 3 
+Expected category: absence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 0 
+Expected category: presence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 1 
+Expected category: absence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 2 
+Expected category: presence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 3 
+Expected category: absence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 4 
+Expected category: absence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 5 
+Expected category: absence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 6 
+Expected category: presence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 7 
+Expected category: presence 
+Real category: absence
+===============================================
+
+===============================================
+Simplex: 8 
+Expected category: presence 
+Real category: presence
+===============================================
+
+===============================================
+Simplex: 9 
+Expected category: presence 
+Real category: presence
+===============================================
+
+===============================================
+Simplex: 10 
+Expected category: absence 
+Real category: absence
+===============================================
+

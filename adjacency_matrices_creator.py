@@ -1,5 +1,9 @@
 '''
+This module provides a class that will help to create the adjacency matrices for each dimension of a simplicial complex.
 
+Classes
+-------
+AdjacencyMatricesCreator
 '''
 
 import numpy as np
@@ -45,7 +49,7 @@ class AdjacencyMatricesCreator:
       ones = 0
       i = 0
       while i < len(simplex_1):
-        if simplex_1[i] == simplex_2[i] and simplex_1[i] == 1:
+        if simplex_1[i] == 1 and simplex_1[i] == simplex_2[i]:
           ones += 1
         i += 1
       if ones - 1 == q:

@@ -25,15 +25,15 @@ class DistanceMatricesCreator:
     return dist_matrix
 
   def Floyd_Warshall(self, adj_matrix):
-    
     dist_matrix = self.set_up_initial_matrix(adj_matrix)
     for k in range(len(adj_matrix)):
       for i in range(len(adj_matrix)):
-        for j in range(len(adj_matrix)):
-          if i != j and i != k and j != k:
-            if dist_matrix[i][j] > (dist_matrix[i][k] + dist_matrix[k][j]):
-              dist_matrix[i][j] = dist_matrix[i][k] + dist_matrix[k][j]
-          j += 1
+        if i != k:
+          for j in range(len(adj_matrix)):
+            if i != j and j != k:
+              if dist_matrix[i][j] > (dist_matrix[i][k] + dist_matrix[k][j]):
+                dist_matrix[i][j] = dist_matrix[i][k] + dist_matrix[k][j]
+            j += 1
         i += 1
       k += 1
     return dist_matrix

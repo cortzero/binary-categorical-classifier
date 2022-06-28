@@ -8,10 +8,12 @@ class Simplex:
 
   def add_centrality_measure(self, complex_name, centrality):
     self.centrality_measures.append((complex_name, centrality))
+    print('Measures:', self.centrality_measures)
 
   def set_real_category(self):
     max_centrality = max(self.centrality_measures, key=get_centrality_from_tuple)
     self.real_category = max_centrality[0]
+    print('Max centrality:', max_centrality)
 
 def get_centrality_from_tuple(measure):
   return measure[1]
