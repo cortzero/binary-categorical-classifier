@@ -1,13 +1,13 @@
 '''
-Module that exports a function that performs the k-fold algorithm to split the dataset in trian and test subsets.
+Module that represents the classifier and executes the k-fold and the q-analysis algorithm.
 
-Functions
+Classes
 --------
-execute_k_fold : Generator
+Classifier
 '''
-from adjacency_matrices_creator import AdjacencyMatricesCreator
-from distance_matrices_creator import DistanceMatricesCreator
-from centrality_calculator import calculate_centrality
+from q_analysis.adjacency_matrices_creator import AdjacencyMatricesCreator
+from q_analysis.distance_matrices_creator import DistanceMatricesCreator
+from q_analysis.centrality_calculator import calculate_centrality
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import KFold

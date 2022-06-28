@@ -6,7 +6,7 @@ Classes
 SimplicialComplexCreator
 '''
 
-from simplicial_complex import SimplicialComplex
+from model.simplicial_complex import SimplicialComplex
 
 class SimplicialComplexCreator:
 

@@ -1,6 +1,6 @@
-from classifier_main_module import Classifier
-from simplicial_complex_creator import SimplicialComplexCreator
-from simplex import Simplex
+from classifier import Classifier
+from q_analysis.simplicial_complex_creator import SimplicialComplexCreator
+from model.simplex import Simplex
 
 
 if __name__ == '__main__':
