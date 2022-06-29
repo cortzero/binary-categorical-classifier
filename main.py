@@ -2,16 +2,29 @@ from classifier import Classifier
 from q_analysis.simplicial_complex_creator import SimplicialComplexCreator
 from model.simplex import Simplex
 
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-if __name__ == '__main__':
 
-  DATASE_NAME = 'car_evaluation_one_hot_encoded'
-  DATASET_PATH = 'resources/{}.xlsx'.format(DATASE_NAME)
-  OUTPUT_FILE = 'output/output_{}.txt'.format(DATASE_NAME)
+DATASE_NAME = 'car_evaluation_one_hot_encoded'
+DATASET_PATH = 'resources/{}.xlsx'.format(DATASE_NAME)
+OUTPUT_FILE = 'output/output_{}.txt'.format(DATASE_NAME)
 
-  classifier = Classifier(DATASET_PATH)
 
-  SPLITS = 4
+#Set up Flask
+app = Flask(__name__)
+
+#Set up Flask to bypass CORS
+cors = CORS(app)
+
+#Create the receiver API POST endpoint:
+@app.route("/send", methods=["POST"])
+def post_dataframe():
+  dataframe = request.get_json()
+
+  classifier = Classifier(dataframe)
+
+  SPLITS = 2
   SHUFFLE = False
   
   train_simplices, test_simplices = next(classifier.execute_k_fold(SPLITS, SHUFFLE))
@@ -50,3 +63,9 @@ if __name__ == '__main__':
     print('Real category:', simplex.real_category)
     print('===============================================')
     print()
+
+  dataframe = jsonify(dataframe)
+  return dataframe
+
+if __name__ == '__main__':
+  app.run(debug=True)
