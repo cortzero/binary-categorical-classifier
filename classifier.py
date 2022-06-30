@@ -8,7 +8,6 @@ Classifier
 from q_analysis.adjacency_matrices_creator import AdjacencyMatricesCreator
 from q_analysis.distance_matrices_creator import DistanceMatricesCreator
 from q_analysis.centrality_calculator import calculate_centrality
-import numpy as np
 import pandas as pd
 from sklearn.model_selection import KFold
 
@@ -47,7 +46,7 @@ class Classifier:
       test_matrix = []
       for x in test:
         simplex_list = self.dataset.iloc[x].tolist()
-        simplex_list.append(x)
+        simplex_list.append(x) # append example id from the dataset
         test_matrix.append(simplex_list)
       yield train_matrix, test_matrix
 
@@ -68,9 +67,6 @@ class Classifier:
     adjacency_matrices_creator = AdjacencyMatricesCreator() # Adjacency matrices
     distance_matrices_creator = DistanceMatricesCreator() # Distance matrices
     k_complex = simplicial_complex.get_name() # Category of the simplicial complex
-
-    print()
-    print('Complex:', k_complex)
 
     incidence_matrix = simplicial_complex.get_incidence_matrix()
     incidence_matrix.append(test_simplex.attributes)
