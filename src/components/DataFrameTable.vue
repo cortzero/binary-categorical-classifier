@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   props: {
     dataset: {
@@ -34,7 +36,14 @@ export default {
         this.datasetObject[key] = this.columnAttribute;
         this.columnAttribute = []
       });
-      this.$emit('nextStep', {componentName: 'ClassificationResponse'});
+      axios.post('http://127.0.0.1:5000/send', this.datasetObject).then(response => {
+          const arrayString = JSON.stringify(response.data);
+          const arrayObject = JSON.parse(arrayString);
+          const arrayWithObjects = arrayObject.map(sample => {
+            return JSON.parse(sample);
+          });
+          console.log(arrayWithObjects);
+        }).finally(() => this.$emit('nextStep', {componentName: 'ClassificationResponse'}));
     }
   },
   created() {
