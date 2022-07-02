@@ -21,12 +21,19 @@ export default {
   },
   data() {
     return {
-      columnNames: [],
-      rowData: []
+      columnAttribute: [],
+      datasetObject: {}
     }
   },
   methods: {
     startClassification() {
+      Object.keys(this.dataset[0]).forEach((key) => {
+        this.dataset.forEach((sample) => {
+          this.columnAttribute.push(sample[key]);
+        });
+        this.datasetObject[key] = this.columnAttribute;
+        this.columnAttribute = []
+      });
       this.$emit('nextStep', {componentName: 'ClassificationResponse'});
     }
   },
