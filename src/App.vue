@@ -1,17 +1,47 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <nav class="navbar navbar-dark color-blue justify-content-center">
+      <div class="color-white-text pt-2">
+        <h3>Clasificador de datos binarios y categóricos</h3>
+      </div>
+    </nav>
+    <div>
+      <component @nextStep='changeStep' :is="currentStep" v-bind="currentProps"></component>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import UploadDataset from './components/UploadDataset.vue';
+import DataFrameTable from './components/DataFrameTable.vue';
+import ClassificationResponse from './components/ClassificationResponse.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    UploadDataset,
+    DataFrameTable,
+    ClassificationResponse
+  },
+  data() {
+    return {
+      currentStep: 'UploadDataset',
+      dataset: []
+    }
+  },
+  methods: {
+    changeStep(args) {
+      this.dataset = args.dataset;
+      this.currentStep = args.componentName;
+    }
+  },
+  computed: {
+    currentProps() {
+      if (this.currentStep == 'DataFrameTable') {
+        return {dataset: this.dataset};
+      }
+      return null;
+    }
   }
 }
 </script>
@@ -23,6 +53,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0px;
+}
+.color-blue {
+  background-color: #00599C;
+}
+.color-white-text {
+  color: #ffffff;
 }
 </style>
