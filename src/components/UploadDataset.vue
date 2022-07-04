@@ -1,11 +1,11 @@
 <template>
   <div class="m-3 p-3">
-    <div>
+    <div class="my-2">
       <h3>
         Primero suba un dataset que ya se encuentre codificado en one-hot
       </h3>
     </div>
-    <div>
+    <div class="my-2">
       <input type="file" name="dataset" id="dataset" accept=".xls, .xlsx" @change="uploadDataset">
     </div>
     <div>
@@ -46,3 +46,5 @@ export default {
   }
 }
 </script>
+
+

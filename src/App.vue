@@ -26,19 +26,24 @@ export default {
   data() {
     return {
       currentStep: 'UploadDataset',
-      dataset: []
+      dataset: [],
+      results: []
     }
   },
   methods: {
     changeStep(args) {
       this.dataset = args.dataset;
+      this.results = args.results;
       this.currentStep = args.componentName;
     }
   },
   computed: {
     currentProps() {
-      if (this.currentStep == 'DataFrameTable') {
+      if(this.currentStep == 'DataFrameTable') {
         return {dataset: this.dataset};
+      }
+      else if(this.currentStep == 'ClassificationResponse') {
+        return {results: this.results};
       }
       return null;
     }

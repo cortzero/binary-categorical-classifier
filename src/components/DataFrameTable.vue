@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       columnAttribute: [],
-      datasetObject: {}
+      datasetObject: {},
+      resultJSON: []
     }
   },
   methods: {
@@ -39,11 +40,11 @@ export default {
       axios.post('http://127.0.0.1:5000/send', this.datasetObject).then(response => {
           const arrayString = JSON.stringify(response.data);
           const arrayObject = JSON.parse(arrayString);
-          const arrayWithObjects = arrayObject.map(sample => {
+          this.resultJSON = arrayObject.map(sample => {
             return JSON.parse(sample);
           });
-          console.log(arrayWithObjects);
-        }).finally(() => this.$emit('nextStep', {componentName: 'ClassificationResponse'}));
+          console.log(this.resultJSON);
+        }).finally(() => this.$emit('nextStep', {componentName: 'ClassificationResponse', results: this.resultJSON}));
     }
   },
   created() {
