@@ -3,6 +3,24 @@
     <div>
       <h3>Clasificación de los datos</h3>
     </div>
+    <div class="my-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-3">
+            Aciertos: {{ hits }}
+          </div>
+          <div class="col-3">
+            Errores: {{ mistakes }}
+          </div>
+          <div class="col-3">
+            Total de ejemplos: {{ totalExamples }}
+          </div>
+          <div class="col-3">
+            Precisión: {{ accuracy }}%
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="mt-4">
       <button class="btn btn-success" @click="goBackHome">Volver al inicio</button>
     </div>
@@ -49,10 +67,29 @@ export default {
       type: Array
     }
   },
+  data() {
+    return {
+      hits: 0,
+      mistakes: 0,
+      totalExamples: 0,
+      accuracy: 0.0
+    }
+  },
   methods: {
     goBackHome() {
       this.$emit('nextStep', {componentName: 'UploadDataset'});
-    }
+    },
+
+  },
+  created() {
+    this.results.forEach(result => {
+      if(result.expected_category == result.real_category) {
+        this.hits += 1;
+      }
+    });
+    this.totalExamples = this.results.length;
+    this.mistakes = this.totalExamples - this.hits;
+    this.accuracy = Math.round((this.hits / this.totalExamples) * 100);
   }
 }
 </script>
