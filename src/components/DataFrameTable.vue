@@ -4,7 +4,7 @@
       <h3>Dataframe</h3>
     </div>
     <div>
-      <b-table outlined striped hover responsive :items="dataset"></b-table>
+      <b-table outlined striped hover responsive :items="dataset" sticky-header="500px"></b-table>
     </div>
     <div>
       <button class="btn btn-success" @click="startClassification">Clasificar</button>
