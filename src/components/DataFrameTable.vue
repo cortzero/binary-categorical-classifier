@@ -7,7 +7,7 @@
       <b-table outlined striped hover responsive :items="dataset" sticky-header="500px"></b-table>
     </div>
     <div>
-      <button class="btn btn-success" @click="startClassification">Clasificar</button>
+      <button :disabled="disable" class="btn btn-success" @click="startClassification">Clasificar</button>
     </div>
   </div>
 </template>
@@ -25,7 +25,8 @@ export default {
     return {
       columnAttribute: [],
       datasetObject: {},
-      resultJSON: []
+      resultJSON: [],
+      disable: false
     }
   },
   methods: {
@@ -45,6 +46,7 @@ export default {
           });
           console.log(this.resultJSON);
         }).finally(() => this.$emit('nextStep', {componentName: 'ClassificationResponse', results: this.resultJSON}));
+      this.disable = true;
     }
   },
   created() {
