@@ -19,12 +19,16 @@ def post_dataframe():
   classifier = Classifier(dataframe)
   simplices_classification = []
 
-  SPLITS = 2
+  SPLITS = 4
   SHUFFLE = False
+
+  i = 0
   
   for train_simplices, test_simplices in classifier.execute_k_fold(SPLITS, SHUFFLE):
     simplicial_complex_creator = SimplicialComplexCreator()
     simplicial_complexes = simplicial_complex_creator.create_simplicial_complex(train_simplices)
+
+    print('Iteration', i, '\n')
 
     # Iteration through all test simplices
     for s in test_simplices:
@@ -37,10 +41,15 @@ def post_dataframe():
       # Iteration through all the simplicial complexes in the train set
       for k in simplicial_complexes:
         classifier.execute_q_analysis(k, simplex)
-
       simplex.set_real_category()
       simplex_json = json.dumps(simplex, default=simplex.serialize)
       simplices_classification.append(simplex_json)
+      
+      print('Simplex:', id)
+      print('Expected category:', simplex.expected_category)
+      print('Computed category:', simplex.real_category, '\n')
+    print('---------------------------------------------------\n\n')
+    i += 1  
 
   response = jsonify(simplices_classification)
   return response
