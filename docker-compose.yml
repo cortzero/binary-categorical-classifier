@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    container_name: classifier-backend
+    working_dir: /binary-and-categorical-data-classifier-using-q-analysis
+    volumes:
+      - .:/binary-and-categorical-data-classifier-using-q-analysis
+  frontend:
+    build: .
+    ports:
+      - "8080:8080"
+    container_name: classifier-frontend
+    working_dir: /binary-and-categorical-data-classifier-using-q-analysis-frontend
+    volumes:
+      - .:/binary-and-categorical-data-classifier-using-q-analysis-frontend
+      - /binary-and-categorical-data-classifier-using-q-analysis-frontend/node_modules
