@@ -1,8 +1,12 @@
 from classifier import Classifier
 from q_analysis.simplicial_complex_creator import SimplicialComplexCreator
+from model.dataframe_tools import get_categories
 from model.simplex import Simplex
+from model.response import Response
+from model.response_json_encoder import ResponseEncoder
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from sklearn.metrics import confusion_matrix
 import json
 
 #Set up Flask
@@ -23,6 +27,10 @@ def post_dataframe():
   SHUFFLE = False
 
   i = 0
+
+  y_real = []
+  y_pred = []
+  categories = get_categories(classifier.dataset.values.tolist())
   
   for train_simplices, test_simplices in classifier.execute_k_fold(SPLITS, SHUFFLE):
     simplicial_complex_creator = SimplicialComplexCreator()
@@ -41,18 +49,24 @@ def post_dataframe():
       # Iteration through all the simplicial complexes in the train set
       for k in simplicial_complexes:
         classifier.execute_q_analysis(k, simplex)
-      simplex.set_real_category()
+      simplex.set_predicted_category()
+      y_real.append(simplex.real_category)
+      y_pred.append(simplex.predicted_category)
       simplex_json = json.dumps(simplex, default=simplex.serialize)
       simplices_classification.append(simplex_json)
       
       print('Simplex:', id)
-      print('Expected category:', simplex.expected_category)
-      print('Computed category:', simplex.real_category, '\n')
+      print('Real category:', simplex.real_category)
+      print('Predicted category:', simplex.predicted_category, '\n')
     print('---------------------------------------------------\n\n')
-    i += 1  
+    i += 1
 
-  response = jsonify(simplices_classification)
-  return response
+  #response = jsonify(simplices_classification)
+  print(categories)
+  response = Response()
+  response.categories = categories
+  response.confusion_matrix = confusion_matrix(y_real, y_pred, labels=categories).tolist()
+  return json.dumps(response, cls=ResponseEncoder)
 
 if __name__ == '__main__':
   app.run(debug=True)

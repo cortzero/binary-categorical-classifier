@@ -14,7 +14,6 @@ from sklearn.model_selection import KFold
 class Classifier:
 
   def __init__(self, data):
-    #self.dataset = pd.read_excel(dataset_path)
     self.dataset = pd.DataFrame(data)
 
   def execute_k_fold(self, splits, has_to_shuffle):
