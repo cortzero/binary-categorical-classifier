@@ -39,12 +39,8 @@ export default {
         this.columnAttribute = []
       });
       axios.post('http://127.0.0.1:5000/send', this.datasetObject).then(response => {
-          const arrayString = JSON.stringify(response.data);
-          const arrayObject = JSON.parse(arrayString);
-          this.resultJSON = arrayObject.map(sample => {
-            return JSON.parse(sample);
-          });
-          console.log(this.resultJSON);
+          //console.log(response.data)
+          this.resultJSON = response.data;
         }).finally(() => this.$emit('nextStep', {componentName: 'ClassificationResponse', results: this.resultJSON}));
       this.disable = true;
     }

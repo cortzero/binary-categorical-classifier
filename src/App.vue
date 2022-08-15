@@ -27,7 +27,7 @@ export default {
     return {
       currentStep: 'UploadDataset',
       dataset: [],
-      results: []
+      results: Object
     }
   },
   methods: {
@@ -43,7 +43,7 @@ export default {
         return {dataset: this.dataset};
       }
       else if(this.currentStep == 'ClassificationResponse') {
-        return {results: this.results};
+        return {response: this.results};
       }
       return null;
     }

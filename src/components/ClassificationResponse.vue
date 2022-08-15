@@ -25,37 +25,7 @@
       <button class="btn btn-success" @click="goBackHome">Volver al inicio</button>
     </div>
     <div class="mt-5">
-      <div class="my-1" v-for="result in results" :key="result.id">
-        <div class="card">
-          <div class="card-body">
-            <div class="container mx-2 mw-100">
-              <div class="row">
-                <div class="col-11">
-                  <h5 class="card-title text-start fw-bold">Ejemplo {{ result.id }}</h5>
-                </div>
-                <div class="col-1">
-                  <font-awesome-icons 
-                    v-if="result.expected_category == result.real_category" 
-                    icon="circle-check" 
-                    style="color:green">
-                  </font-awesome-icons>
-                  <font-awesome-icons
-                    v-else
-                    icon="circle-xmark" 
-                    style="color:red">
-                  </font-awesome-icons>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-start">Expected category: {{ result.expected_category }}</div>
-              </div>
-              <div class="row">
-                <div class="text-start">Computed category: {{ result.real_category }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <b-table outlined responsive :items="matrix" :fields="fields" sticky-header="500px"></b-table>
     </div>
   </div>
 </template>
@@ -63,8 +33,8 @@
 <script>
 export default {
   props: {
-    results: {
-      type: Array
+    response: {
+      type: Object
     }
   },
   data() {
@@ -72,7 +42,11 @@ export default {
       hits: 0,
       mistakes: 0,
       totalExamples: 0,
-      accuracy: 0.0
+      accuracy: 0.0,
+      precision: 0.0,
+      recall: 0.0,
+      fields: [],
+      matrix: []
     }
   },
   methods: {
@@ -82,14 +56,45 @@ export default {
 
   },
   created() {
-    this.results.forEach(result => {
+    /*this.results.forEach(result => {
       if(result.expected_category == result.real_category) {
         this.hits += 1;
       }
     });
     this.totalExamples = this.results.length;
     this.mistakes = this.totalExamples - this.hits;
-    this.accuracy = Math.round((this.hits / this.totalExamples) * 100);
+    this.accuracy = Math.round((this.hits / this.totalExamples) * 100);*/
+    console.log(this.response.categories);
+    console.log(this.response.confusion_matrix);
+
+    this.fields = JSON.parse(JSON.stringify(this.response.categories));
+
+    for (let index = 0; index < this.fields.length; index++) {
+      let row = {};
+      row[" "] = this.fields[index];
+      for (let j = 0; j < this.fields.length; j++) {
+        row[this.fields[j]] = this.response.confusion_matrix[index][j];
+      }
+      this.matrix.push(row);
+    }
+
+    this.fields.unshift(" ");
+
+    console.log(this.fields);
+    console.log(this.matrix);
+
+
+    let tp = 0;
+    let sum = 0;
+    for (let i = 0; i < this.response.categories.length; i++) {
+      for (let j = 0; j < this.response.categories.length; j++) {
+        if (i == j) {
+          tp += this.response.confusion_matrix[i][j];
+        }
+        sum += this.response.confusion_matrix[i][j];
+      }
+    }
+    this.accuracy = Math.round((tp / sum) * 100);
   }
 }
 </script>
