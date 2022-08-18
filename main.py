@@ -61,7 +61,6 @@ def post_dataframe():
     print('---------------------------------------------------\n\n')
     i += 1
 
-  #response = jsonify(simplices_classification)
   print(categories)
   response = Response()
   response.categories = categories

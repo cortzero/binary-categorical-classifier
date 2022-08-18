@@ -11,17 +11,6 @@ class SimplicialComplex:
   '''
   Class representation of a simplicial complex
   '''
-
-  '''
-  __init__ method that builds a SimplicialComplex object
-
-  Parameters
-  ----------
-  name : str
-      One of the categories from the dataset.
-  incidence_matrix : List
-      A matrix representation of the simplicial complex.
-  '''
   def __init__(self, name, incidence_matrix):
     self.__name = name
     self.__incidence_matrix = incidence_matrix
@@ -41,11 +30,6 @@ class SimplicialComplex:
 
   '''
   Returns the dimension of the simplicial complex, which is the dimension of the simplex with the most number of ones.
-
-  Returns
-  -------
-  dimension : int
-    The dimension of the simplicial complex
   '''
   def get_dimension(self):
     return self.__dimension

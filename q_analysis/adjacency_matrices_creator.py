@@ -1,9 +1,5 @@
 '''
 This module provides a class that will help to create the adjacency matrices for each dimension of a simplicial complex.
-
-Classes
--------
-AdjacencyMatricesCreator
 '''
 
 import numpy as np
