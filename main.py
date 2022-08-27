@@ -8,6 +8,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from sklearn.metrics import confusion_matrix
 import json
+import time
 
 #Set up Flask
 app = Flask(__name__)
@@ -32,6 +33,10 @@ def post_dataframe():
   y_pred = []
   categories = get_categories(classifier.dataset.values.tolist())
   
+  # ==================== START TIME ====================
+  st = time.time()
+  # ==================== START TIME ====================
+
   for train_simplices, test_simplices in classifier.execute_k_fold(SPLITS, SHUFFLE):
     simplicial_complex_creator = SimplicialComplexCreator()
     simplicial_complexes = simplicial_complex_creator.create_simplicial_complex(train_simplices)
@@ -60,6 +65,14 @@ def post_dataframe():
       print('Predicted category:', simplex.predicted_category, '\n')
     print('---------------------------------------------------\n\n')
     i += 1
+
+  # ==================== END TIME ====================
+  et = time.time()
+
+  elapsed_time = et - st
+  # ==================== END TIME ====================
+
+  print('Elapsed time:', round(elapsed_time, 5), 'seconds')
 
   print(categories)
   response = Response()

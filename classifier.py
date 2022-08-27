@@ -6,6 +6,11 @@ from q_analysis.distance_matrices_creator import DistanceMatricesCreator
 from q_analysis.centrality_calculator import calculate_centrality
 import pandas as pd
 from sklearn.model_selection import KFold
+import time
+
+
+decimals = 5
+
 
 class Classifier:
 
@@ -38,11 +43,58 @@ class Classifier:
     distance_matrices_creator = DistanceMatricesCreator() # Distance matrices
     k_complex = simplicial_complex.get_name() # Category of the simplicial complex
 
+
+
+    # ==================== START TIME INCIDENCE MATRIX ====================
+    st_incidence = time.time()
+    # ==================== START TIME INCIDENCE MATRIX ====================
+
     incidence_matrix = simplicial_complex.get_incidence_matrix()
+
+    # ==================== END TIME INCIDENCE MATRIX ====================
+    et_incidence = time.time()
+    elapse_time_incidence = et_incidence - st_incidence
+    print('Incidence matrix creation time:', round(elapse_time_incidence, decimals), 'seconds')
+    # ==================== END TIME INCIDENCE MATRIX ====================
+
+
+
     incidence_matrix.append(test_simplex.attributes)
     simplicial_complex.calculate_dimension()
+
+
+
+    # ==================== START TIME ADJACENCY MATRIX ====================
+    st_adjacency = time.time()
+    # ==================== START TIME ADJACENCY MATRIX ====================
+
     adj_matrices_k = adjacency_matrices_creator.create_adjacency_matrices(simplicial_complex, incidence_matrix)
+
+    # ==================== END TIME ADJACENCY MATRIX ====================
+    et_adjacency = time.time()
+    elapse_time_adjacency = et_adjacency - st_adjacency
+    print('Adjacency matrix creation time:', round(elapse_time_adjacency, decimals), ' seconds')
+    # ==================== END TIME ADJACENCY MATRIX ====================
+
+
+
+    # ==================== START TIME DISTANCE MATRIX ====================
+    st_distance = time.time()
+    # ==================== START TIME DISTANCE MATRIX ====================
+
     dist_matrices_k = distance_matrices_creator.create_distance_matrices(adj_matrices_k)
+
+    # ==================== END TIME DISTANCE MATRIX ====================
+    et_distance = time.time()
+    elapse_time_distance = et_distance - st_distance
+    print('Distance matrix creation time:', round(elapse_time_distance, decimals), ' seconds')
+    # ==================== END TIME DISTANCE MATRIX ====================
+
+
+
+    # ==================== START TIME CENTRALITY CALCULATION ====================
+    st_centrality = time.time()
+    # ==================== START TIME CENTRALITY CALCULATION ====================
 
     # Loop through distance matrices
     centrality = 0
@@ -50,6 +102,16 @@ class Classifier:
       test_simplex_distance_list = distance_matrix[-1] # Retrieve the test simplex which is the last one in the distance matrix
       centrality += calculate_centrality(test_simplex_distance_list) # accumulated sum for centrality for the whole complex
     
+    # ==================== END TIME CENTRALITY CALCULATION ====================
+    et_centrality = time.time()
+    elapse_time_centrality = et_centrality - st_centrality
+    print('Centrality calculation time:', round(elapse_time_centrality, decimals), ' seconds')
+    # ==================== END TIME CENTRALITY CALCULATION ====================
+
+
+    print()
+
+
     # Round the centrality measure to two decimals
     centrality = round(centrality, 2)
     # Adds the pair simplicial complex name and centrality value
