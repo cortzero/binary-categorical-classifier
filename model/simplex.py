@@ -18,7 +18,7 @@ class Simplex:
   def serialize(self, obj):
     """JSON serializer for objects not serializable by default json code"""
 
-    if isinstance(obj, np.int64):
+    if isinstance(obj, np.int64) or isinstance(obj, np.int32):
       serial = obj.tolist()
       return serial
 

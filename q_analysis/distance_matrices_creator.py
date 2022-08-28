@@ -20,8 +20,6 @@ class DistanceMatricesCreator:
             dist_matrix[i][j] = INF
         else:
           dist_matrix[i][j] = 0
-        j += 1
-      i += 1
     return dist_matrix
 
   def Floyd_Warshall(self, adj_matrix):
@@ -29,11 +27,9 @@ class DistanceMatricesCreator:
     for k in range(len(adj_matrix)):
       for i in range(len(adj_matrix)):
         if i != k:
-          for j in range(len(adj_matrix)):
-            if i != j and j != k:
+          for j in range(i, len(adj_matrix)):
+            if j != k:
               if dist_matrix[i][j] > (dist_matrix[i][k] + dist_matrix[k][j]):
                 dist_matrix[i][j] = dist_matrix[i][k] + dist_matrix[k][j]
-            j += 1
-        i += 1
-      k += 1
+                dist_matrix[j][i] = dist_matrix[i][k] + dist_matrix[k][j]
     return dist_matrix
