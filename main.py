@@ -24,7 +24,7 @@ def post_dataframe():
   classifier = Classifier(dataframe)
   simplices_classification = []
 
-  SPLITS = 2
+  SPLITS = 4
   SHUFFLE = False
 
   i = 0

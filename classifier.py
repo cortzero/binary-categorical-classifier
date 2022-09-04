@@ -69,7 +69,7 @@ class Classifier:
     st_adjacency = time.time()
     # ==================== START TIME ADJACENCY MATRIX ====================
 
-    adj_matrices_k = adjacency_matrices_creator.create_adjacency_matrices(simplicial_complex, incidence_matrix)
+    adj_matrices_k = adjacency_matrices_creator.create_q_adjacency_matrices(simplicial_complex.get_dimension(), incidence_matrix)
 
     # ==================== END TIME ADJACENCY MATRIX ====================
     et_adjacency = time.time()
