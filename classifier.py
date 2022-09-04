@@ -50,6 +50,7 @@ class Classifier:
     # ==================== START TIME INCIDENCE MATRIX ====================
 
     incidence_matrix = simplicial_complex.get_incidence_matrix()
+    simplices_amount = len(incidence_matrix)
 
     # ==================== END TIME INCIDENCE MATRIX ====================
     et_incidence = time.time()
@@ -98,9 +99,10 @@ class Classifier:
 
     # Loop through distance matrices
     centrality = 0
-    for distance_matrix in dist_matrices_k.values():
-      test_simplex_distance_list = distance_matrix[-1] # Retrieve the test simplex which is the last one in the distance matrix
-      centrality += calculate_centrality(test_simplex_distance_list) # accumulated sum for centrality for the whole complex
+    for distance_matrix_q in dist_matrices_k.values():
+      test_simplex_distance_list = distance_matrix_q[-1] # Retrieve the test simplex which is the last one in the distance matrix
+      normalized_centrality = calculate_centrality(test_simplex_distance_list) / simplices_amount
+      centrality += normalized_centrality
     
     # ==================== END TIME CENTRALITY CALCULATION ====================
     et_centrality = time.time()
@@ -113,6 +115,6 @@ class Classifier:
 
 
     # Round the centrality measure to two decimals
-    centrality = round(centrality, 2)
+    #centrality = round(centrality, 2)
     # Adds the pair simplicial complex name and centrality value
     test_simplex.add_centrality_measure(k_complex, centrality)
