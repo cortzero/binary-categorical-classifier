@@ -1,35 +1,41 @@
 import math
 import copy
+from queue import Queue
 
 class DistanceMatricesCreator:
 
-  def create_distance_matrices(self, adj_matrices):
-    dist_matrices = dict()
+  def create_graph(self, adj_matrix):
+    n_simplices = range(len(adj_matrix))
+    graph = { s: [] for s in n_simplices }
+    for i in n_simplices:
+      simplex = adj_matrix[i]
+      for j in range(i, len(simplex)):
+        if i != j and adj_matrix[i][j] == 1:
+          graph[i].append(j)
+          graph[j].append(i)
+    return graph
+
+  def calculate_distance(self, input_graph, source):
+    Q = Queue()
+    distance_dict = { s: math.inf for s in input_graph.keys() }
+    visited_simplices = list()
+    Q.put(source)
+    visited_simplices.append(source)
+    while not Q.empty():
+      simplex = Q.get()
+      if simplex == source:
+        distance_dict[simplex] = 0
+      for u in input_graph[simplex]:
+        if u not in visited_simplices:
+          if distance_dict[u] > distance_dict[simplex] + 1:
+            distance_dict[u] = distance_dict[simplex] + 1
+          Q.put(u)
+          visited_simplices.append(u)
+    return distance_dict
+
+  def create_distance_matrices(self, adj_matrices, source):
+    distances = dict()
     for q, adj_matrix in adj_matrices.items():
-      q_dist_matrix = self.Floyd_Warshall(adj_matrix)
-      dist_matrices[q] = q_dist_matrix
-    return dist_matrices
-
-  def set_up_initial_matrix(self, adj_matrix):
-    dist_matrix = copy.deepcopy(adj_matrix)
-    INF = math.inf
-    for i in range(len(dist_matrix)):
-      for j in range(len(dist_matrix)):
-        if i != j:
-          if adj_matrix[i][j] == 0:
-            dist_matrix[i][j] = INF
-        else:
-          dist_matrix[i][j] = 0
-    return dist_matrix
-
-  def Floyd_Warshall(self, adj_matrix):
-    dist_matrix = self.set_up_initial_matrix(adj_matrix)
-    for k in range(len(adj_matrix)):
-      for i in range(len(adj_matrix)):
-        if i != k:
-          for j in range(i, len(adj_matrix)):
-            if j != k:
-              if dist_matrix[i][j] > (dist_matrix[i][k] + dist_matrix[k][j]):
-                dist_matrix[i][j] = dist_matrix[i][k] + dist_matrix[k][j]
-                dist_matrix[j][i] = dist_matrix[i][k] + dist_matrix[k][j]
-    return dist_matrix
+      q_graph = self.create_graph(adj_matrix)
+      distances[q] = self.calculate_distance(q_graph, source)
+    return distances

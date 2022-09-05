@@ -83,7 +83,7 @@ class Classifier:
     st_distance = time.time()
     # ==================== START TIME DISTANCE MATRIX ====================
 
-    dist_matrices_k = distance_matrices_creator.create_distance_matrices(adj_matrices_k)
+    distances = distance_matrices_creator.create_distance_matrices(adj_matrices_k, len(incidence_matrix) - 1)
 
     # ==================== END TIME DISTANCE MATRIX ====================
     et_distance = time.time()
@@ -99,9 +99,9 @@ class Classifier:
 
     # Loop through distance matrices
     centrality = 0
-    for distance_matrix_q in dist_matrices_k.values():
-      test_simplex_distance_list = distance_matrix_q[-1] # Retrieve the test simplex which is the last one in the distance matrix
-      normalized_centrality = calculate_centrality(test_simplex_distance_list) / simplices_amount
+    for q_distance in distances.values():
+      #test_simplex_distance_list = distance_matrix_q[-1] # Retrieve the test simplex which is the last one in the distance matrix
+      normalized_centrality = calculate_centrality(q_distance.values()) / simplices_amount
       centrality += normalized_centrality
     
     # ==================== END TIME CENTRALITY CALCULATION ====================
