@@ -9,6 +9,9 @@
           <div class="col-3">
             Exactitud: {{ accuracy }}%
           </div>
+          <div class="col-3">
+            Recall: {{ recall }}%
+          </div>
         </div>
       </div>
     </div>
@@ -49,6 +52,11 @@ export default {
         sum += this.response.confusion_matrix[i].reduce((partialSum, a) => partialSum + a, 0);
       }
       this.accuracy = Math.round((true_cases / sum) * 100);
+    },
+    calculateRecall() {
+      let sum = 0;
+      sum = this.response.confusion_matrix[1].reduce((partialSum, a) => partialSum + a, 0);
+      this.recall = Math.round((this.response.confusion_matrix[1][1] / sum) * 100);
     }
   },
   created() {
@@ -65,6 +73,7 @@ export default {
     this.fields.unshift("Real \\ Predicted");
 
     this.calculateAccuracy();
+    this.calculateRecall();
   }
 }
 </script>
