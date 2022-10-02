@@ -46,20 +46,6 @@ export default {
   methods: {
     goBackHome() {
       this.$emit('nextStep', {componentName: 'UploadDataset'});
-    },
-    calculateAccuracy() {
-      let true_cases = 0;
-      let sum = 0;
-      for (let i = 0; i < this.response.categories.length; i++) {
-        true_cases += this.response.confusion_matrix[i][i];
-        sum += this.response.confusion_matrix[i].reduce((partialSum, a) => partialSum + a, 0);
-      }
-      this.accuracy = Math.round((true_cases / sum) * 100);
-    },
-    calculateRecall() {
-      let sum = 0;
-      sum = this.response.confusion_matrix[1].reduce((partialSum, a) => partialSum + a, 0);
-      this.recall = Math.round((this.response.confusion_matrix[1][1] / sum) * 100);
     }
   },
   created() {
@@ -74,8 +60,6 @@ export default {
       this.matrix.push(row);
     }
     this.fields.unshift("Real \\ Predicted");
-
-    console.log(this.response.classification_report);
 
     this.accuracy = Math.round(this.response.classification_report.accuracy * 100)
     this.precision = Math.round(this.response.classification_report["macro avg"].precision * 100)
