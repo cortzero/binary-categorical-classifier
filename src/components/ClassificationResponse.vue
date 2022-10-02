@@ -10,6 +10,9 @@
             Exactitud: {{ accuracy }}%
           </div>
           <div class="col-3">
+            Precision: {{ precision }}%
+          </div>
+          <div class="col-3">
             Recall: {{ recall }}%
           </div>
         </div>
@@ -72,8 +75,11 @@ export default {
     }
     this.fields.unshift("Real \\ Predicted");
 
-    this.calculateAccuracy();
-    this.calculateRecall();
+    console.log(this.response.classification_report);
+
+    this.accuracy = Math.round(this.response.classification_report.accuracy * 100)
+    this.precision = Math.round(this.response.classification_report["macro avg"].precision * 100)
+    this.recall = Math.round(this.response.classification_report["macro avg"].recall * 100)
   }
 }
 </script>
