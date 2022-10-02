@@ -6,7 +6,7 @@ from model.response import Response
 from model.response_json_encoder import ResponseEncoder
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, classification_report
 import json
 import time
 
@@ -78,6 +78,8 @@ def post_dataframe():
   response = Response()
   response.categories = categories
   response.confusion_matrix = confusion_matrix(y_real, y_pred, labels=categories).tolist()
+  response.classification_report = classification_report(y_real, y_pred, output_dict=True)
+  #print(classification_report(y_real, y_pred, output_dict=True))
   return json.dumps(response, cls=ResponseEncoder)
 
 if __name__ == '__main__':
