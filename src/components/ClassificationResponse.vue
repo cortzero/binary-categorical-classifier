@@ -15,6 +15,9 @@
           <div class="col-3">
             Recall: {{ recall }}%
           </div>
+          <div class="col-3">
+            Cohen Kappa Score: {{ cohenKappaScore }}%
+          </div>
         </div>
       </div>
     </div>
@@ -39,6 +42,7 @@ export default {
       accuracy: 0.0,
       precision: 0.0,
       recall: 0.0,
+      cohenKappaScore: 0.0,
       fields: [],
       matrix: []
     }
@@ -64,6 +68,7 @@ export default {
     this.accuracy = Math.round(this.response.classification_report.accuracy * 100)
     this.precision = Math.round(this.response.classification_report["macro avg"].precision * 100)
     this.recall = Math.round(this.response.classification_report["macro avg"].recall * 100)
+    this.cohenKappaScore = Math.round(this.response.cohen_kappa * 100)
   }
 }
 </script>
