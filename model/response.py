@@ -3,4 +3,4 @@ class Response:
     self.categories = []
     self.confusion_matrix = []
     self.classification_report = {}
-  
+    self.cohen_kappa = 0
