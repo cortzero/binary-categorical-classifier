@@ -32,6 +32,7 @@ def post_dataframe():
   y_real = []
   y_pred = []
   categories = get_categories(classifier.dataset.values.tolist())
+  categories.sort()
   
   # ==================== START TIME ====================
   st = time.time()
