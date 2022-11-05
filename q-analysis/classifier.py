@@ -54,9 +54,8 @@ class Classifier:
     # Loop through distance matrices
     centrality = 0
     for q_distance in distances.values():
-      #test_simplex_distance_list = distance_matrix_q[-1] # Retrieve the test simplex which is the last one in the distance matrix
-      normalized_centrality = calculate_centrality(q_distance.values()) / simplices_amount
-      centrality += normalized_centrality
+      # test_simplex_distance_list = distance_matrix_q[-1] # Retrieve the test simplex which is the last one in the distance matrix
+      centrality += calculate_centrality(q_distance.values())
 
     print()
 
