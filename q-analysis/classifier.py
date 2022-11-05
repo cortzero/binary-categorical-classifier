@@ -49,13 +49,13 @@ class Classifier:
     simplicial_complex.calculate_dimension()
 
     adj_matrices_k = adjacency_matrices_creator.create_q_adjacency_matrices(simplicial_complex.get_dimension(), incidence_matrix)
-    distances = distance_matrices_creator.create_distance_matrices(adj_matrices_k, len(incidence_matrix) - 1)
+    distances = distance_matrices_creator.create_distance_matrices(adj_matrices_k)
 
     # Loop through distance matrices
     centrality = 0
     for q_distance in distances.values():
-      #test_simplex_distance_list = distance_matrix_q[-1] # Retrieve the test simplex which is the last one in the distance matrix
-      normalized_centrality = calculate_centrality(q_distance.values()) / simplices_amount
+      test_simplex_distance_list = q_distance[-1] # Retrieve the test simplex which is the last one in the distance matrix
+      normalized_centrality = calculate_centrality(test_simplex_distance_list) / simplices_amount
       centrality += normalized_centrality
 
     print()
