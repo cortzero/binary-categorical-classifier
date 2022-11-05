@@ -48,7 +48,7 @@ class Classifier:
     incidence_matrix.append(test_simplex.attributes)
     simplicial_complex.calculate_dimension()
 
-    adj_matrices_k = adjacency_matrices_creator.create_q_adjacency_matrices(simplicial_complex.get_dimension(), incidence_matrix)
+    adj_matrices_k = adjacency_matrices_creator.create_q_adjacency_matrices(simplicial_complex, incidence_matrix)
     distances = distance_matrices_creator.create_distance_matrices(adj_matrices_k, len(incidence_matrix) - 1)
 
     # Loop through distance matrices
